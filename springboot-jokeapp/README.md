@@ -1,0 +1,1 @@
+This springboot web application displays chuck norris joke on the index.
