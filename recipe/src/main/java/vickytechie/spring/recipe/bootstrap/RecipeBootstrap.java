@@ -1,7 +1,11 @@
 package vickytechie.spring.recipe.bootstrap;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import vickytechie.spring.recipe.domain.*;
 import vickytechie.spring.recipe.repositories.CategoryRepository;
 import vickytechie.spring.recipe.repositories.RecipeRepository;
@@ -15,6 +19,7 @@ import java.util.Optional;
 /**
  * Created by jt on 6/13/17.
  */
+@Data
 @Component
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -29,6 +34,7 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
     }
 
     @Override
+    @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
         recipeRepository.saveAll(getRecipes());
     }
@@ -139,6 +145,10 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         guacRecipe.getCategory().add(americanCategory);
         guacRecipe.getCategory().add(mexicanCategory);
+        guacRecipe.setServings(4);
+        guacRecipe.setUri("http://www.simplyrecipes.com/");
+        guacRecipe.setSource("Simply Recipes");
+
 
         //add to return list
         recipes.add(guacRecipe);
@@ -198,6 +208,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         tacosRecipe.getCategory().add(americanCategory);
         tacosRecipe.getCategory().add(mexicanCategory);
+        guacRecipe.setServings(2);
+        tacosRecipe.setUri("http://www.simplyrecipes.com/");
+        tacosRecipe.setSource("Simply Recipes");
 
         recipes.add(tacosRecipe);
         return recipes;
